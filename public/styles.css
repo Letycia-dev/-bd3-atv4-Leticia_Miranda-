@@ -1,0 +1,130 @@
+html body h1{
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.header_container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-color: blue;
+    color: #FFF;
+    font-weight: bold;
+    padding: 50px 0px;
+}
+
+.header_container img{
+    width: 80px;
+    margin-right: 10px;
+}
+
+.button_post_container{
+    background-color: #CCC;
+    text-align: right;
+    padding: 10px;
+    margin-top: 5px;
+}
+
+.button_post_container button{
+    background-color: #00801A;
+    color: #FFF;
+    font-weight: bold;
+    border: 0;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100px;
+    cursor: pointer;
+}
+
+.posts_container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #CCC;
+    margin-top: 5px;
+    padding: 10px;
+}
+
+.post_container{
+    width: 50%;
+    background-color: #e3e1e1;
+    border: #999 2px solid;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+
+.post_container p{
+    text-align: justify;
+}
+
+.post_container span{
+    text-align: justify;
+    font-weight: bold;
+}
+
+/* CSS DO FORMULARIO MODAL DE CADASTRO DE POST: */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.close {
+  color: red;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.form_post_container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex-direction: column;    
+}
+
+.form_post_container input{
+    margin: 10px;
+    padding: 10px;
+    width: 500px;
+    border-radius: 5px;
+    border: #999 1px solid;
+}
+
+.form_post_container button{
+    background-color: #00801A;
+    color: #FFF;
+    font-weight: bold;
+    border: 0;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100px;
+    cursor: pointer;
+}
+

@@ -1,0 +1,21 @@
+{
+  "name": "atv_bd3_rede_social",
+  "version": "1.0.0",
+  "description": "Atividade de BD3 de um prototipo de rede social utilizando banco de dados NOSQL MongoDB.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "mongoose": "^8.15.1",
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "keywords": []
+}

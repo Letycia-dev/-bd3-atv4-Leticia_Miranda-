@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chat com Socket.io</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+  <div class="header_container">
+    <h1>Atividade - Rede Social</h1>
+  </div>
+
+  <div class="button_post_container">
+    <button id="btnOpenModal">Postar</button>
+  </div>
+
+  <div class="posts_container" id="postsContainer">
+    <!-- Posts vão aparecer aqui -->
+  </div>
+
+  <!-- Modal de postagem -->
+  <div id="modalPost" class="modal">
+    <div class="modal-content">
+      <span class="close" id="modalClose">&times;</span>
+      <form id="formPost" class="form_post_container">
+        <input type="text" id="userInput" placeholder="Seu nome" required />
+        <input type="text" id="messageInput" placeholder="Mensagem" required />
+        <button type="submit">Enviar</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const socket = io();
+
+    // Formata a data e hora no formato pt-BR
+    function formatDateTime(dateStr) {
+      const date = new Date(dateStr);
+      return date.toLocaleString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+
+    // Recebe mensagens anteriores
+    socket.on('previousMessages', (messages) => {
+      $('#postsContainer').empty();
+      messages.forEach(post => {
+        $('#postsContainer').append(`
+          <div class="post_container">
+            <span>${post.user}:</span>
+            <p>${post.message}</p>
+            <div class="post_date">${formatDateTime(post.timestamp)}</div>
+          </div>
+        `);
+      });
+    });
+
+    // Recebe nova mensagem em tempo real
+    socket.on('receivedMessage', (post) => {
+      $('#postsContainer').append(`
+        <div class="post_container">
+          <span>${post.user}:</span>
+          <p>${post.message}</p>
+          <div class="post_date">${formatDateTime(post.timestamp)}</div>
+        </div>
+      `);
+    });
+
+    // Mostrar modal ao clicar no botão
+    $('#btnOpenModal').click(() => {
+      $('#modalPost').css('display', 'block');
+      $('#userInput').focus();
+    });
+
+    // Fechar modal ao clicar no "X"
+    $('#modalClose').click(() => {
+      $('#modalPost').css('display', 'none');
+    });
+
+    // Fechar modal ao clicar fora da área modal
+    window.onclick = function(event) {
+      if (event.target == document.getElementById('modalPost')) {
+        $('#modalPost').css('display', 'none');
+      }
+    };
+
+    // Enviar mensagem via socket e fechar modal
+    $('#formPost').submit(e => {
+      e.preventDefault();
+
+      const user = $('#userInput').val().trim();
+      const message = $('#messageInput').val().trim();
+
+      if (!user || !message) return;
+
+      socket.emit('sendMessage', { user, message });
+
+      $('#userInput').val('');
+      $('#messageInput').val('');
+      $('#modalPost').css('display', 'none');
+    });
+  </script>
+</body>
+</html>

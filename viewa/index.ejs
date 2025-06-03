@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chat com Socket.io</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+  <div class="header_container">
+    <h1>Chat</h1>
+  </div>
+
+  <div class="posts_container" id="postsContainer">
+
+  </div>
+
+  <form id="formPost" class="form_post_container">
+    <input type="text" id="userInput" placeholder="Seu nome" required />
+    <input type="text" id="messageInput" placeholder="Mensagem" required />
+    <button type="submit">Enviar</button>
+  </form>
+
+  <script>
+    const socket = io();
+
+    socket.on('previousMessages', (messages) => {
+      $('#postsContainer').empty();
+      messages.forEach(post => {
+        $('#postsContainer').append(`
+          <div class="post_container">
+            <span>${post.user}:</span>
+            <p>${post.message}</p>
+          </div>
+        `);
+      });
+    });
+
+    socket.on('receivedMessage', (post) => {
+      $('#postsContainer').append(`
+        <div class="post_container">
+          <span>${post.user}:</span>
+          <p>${post.message}</p>
+        </div>
+      `);
+    });
+
+    $('#formPost').submit(e => {
+      e.preventDefault();
+
+      const user = $('#userInput').val().trim();
+      const message = $('#messageInput').val().trim();
+
+      if (!user || !message) return;
+
+      socket.emit('sendMessage', { user, message });
+
+      $('#messageInput').val('').focus();
+    });
+  </script>
+</body>
+</html>
+
